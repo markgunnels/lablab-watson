@@ -29,6 +29,12 @@
                                              prescription)]
     (response result)))
 
+(defn handle-celd
+  [prescription]
+  (let [result (w/celd api-key
+                       prescription)]
+    (response result)))
+
 (defn handle-head-request []
   (-> (response "")
       (status 202)))
@@ -38,6 +44,9 @@
   (POST "/prescription" {body :body}
         (let [prescription (slurp body)]
           (handle-prescription prescription)))
+  (POST "/celd" {body :body}
+        (let [prescription (slurp body)]
+          (handle-celd prescription)))
   (route/not-found "Not Found"))
 
 (def wrapped-app

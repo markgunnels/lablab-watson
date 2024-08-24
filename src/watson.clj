@@ -147,3 +147,10 @@
         results (process-prompts api-key prompts)
         prescription {}]
     (into {} (map return-value results))))
+
+(defn celd
+  [api-key label-directions]
+  (let [prompt (format celd-prompt label-directions)
+        token-response (get-ibm-iam-token api-key)
+        access-token (:access_token token-response)]
+    (ibm-ml-text-generation access-token prompt {:model-id "meta-llama/llama-3-405b-instruct"})))

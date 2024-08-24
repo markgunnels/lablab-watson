@@ -204,5 +204,5 @@
   (let [prompt (format translate-prompt language label-directions)
         token-response (get-ibm-iam-token api-key)
         access-token (:access_token token-response)
-        result (ibm-ml-text-generation access-token prompt {:model-id ""})]
+        result (ibm-ml-text-generation access-token prompt {:model-id "ibm/granite-20b-multilingual"})]
     (return-str result)))

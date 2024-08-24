@@ -21,8 +21,10 @@
             [watson :as w]
             ))
 
+(def api-key (System/getenv "watson"))
+
 (defn handle-prescription [prescription]
-  (response {:prescription prescription}))
+  (response {:prescription prescription :apikey api-key}))
 
 (defn handle-head-request []
   (-> (response "")

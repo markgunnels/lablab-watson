@@ -35,6 +35,13 @@
                        prescription)]
     (response result)))
 
+(defn handle-translation
+  [language prescription]
+  (let [result (w/translate api-key
+                            language
+                            prescription)]
+    (response result)))
+
 (defn handle-head-request []
   (-> (response "")
       (status 202)))
@@ -47,6 +54,10 @@
   (POST "/celd" {body :body}
         (let [prescription (slurp body)]
           (handle-celd prescription)))
+  (POST "/translate/:language" [language :as {body :body}]
+        (let [prescription (slurp body)]
+          (handle-translation language
+                              prescription)))
   (route/not-found "Not Found"))
 
 (def wrapped-app

@@ -138,6 +138,16 @@
                     "Answer:"
                     ))
 
+(def translate-prompt (long-str
+                       "Task:"
+                       "Translate the provided directions into %s. Please provide the translated directions in the same format, with the Spanish translation for each direction."
+                       ""
+                       "Directions:"
+                       "%s"
+                       ""
+                       "Translated Directions:"
+                       ))
+
 (defn generate [api-key
                 prompt]
   (println prompt)
@@ -187,4 +197,12 @@
         token-response (get-ibm-iam-token api-key)
         access-token (:access_token token-response)
         result (ibm-ml-text-generation access-token prompt {:model-id "meta-llama/llama-3-405b-instruct"})]
+    (return-str result)))
+
+(defn translate
+  [api-key language label-directions]
+  (let [prompt (format translate-prompt language label-directions)
+        token-response (get-ibm-iam-token api-key)
+        access-token (:access_token token-response)
+        result (ibm-ml-text-generation access-token prompt {:model-id ""})]
     (return-str result)))

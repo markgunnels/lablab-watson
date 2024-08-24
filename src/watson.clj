@@ -169,6 +169,10 @@
   [r]
   (-> r :results first :generated_text j/read-value))
 
+(defn return-str
+  [r]
+  (-> r :results first :generated_text))
+
 (defn decompose-label-directions
   [api-key label-directions]
   (let [prompts [(format frequency-prompt label-directions)
@@ -181,5 +185,6 @@
   [api-key label-directions]
   (let [prompt (format celd-prompt label-directions)
         token-response (get-ibm-iam-token api-key)
-        access-token (:access_token token-response)]
-    (ibm-ml-text-generation access-token prompt {:model-id "meta-llama/llama-3-405b-instruct"})))
+        access-token (:access_token token-response)
+        result (ibm-ml-text-generation access-token prompt {:model-id "meta-llama/llama-3-405b-instruct"})]
+    (return-str result)))

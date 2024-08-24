@@ -23,8 +23,11 @@
 
 (def api-key (System/getenv "watson"))
 
-(defn handle-prescription [prescription]
-  (response {:prescription prescription :apikey api-key}))
+(defn handle-prescription
+  [prescription]
+  (let [result (w/decompose-label-directions api-key
+                                             prescription)]
+    (response result)))
 
 (defn handle-head-request []
   (-> (response "")

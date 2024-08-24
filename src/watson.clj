@@ -47,6 +47,35 @@
 
 (defn long-str [& strings] (clojure.string/join "\n" strings))
 
+(def celd-prompt
+  (long-str
+   "Task:"
+   "Please take the provided SIG (label direction) and rewrite it according to the following guidelines:"
+   "- Use four specific time periods to identify when medicine should be taken: morning, noon, evening, and bedtime."
+   "- Simplify text to improve readability."
+   "- Use numeric characters instead of words to detail the dose (e.g. \"2\" instead of \"two\")."
+   "- Place each dose on a separate line, clearly identifying every time period a medicine is to be taken."
+   ""
+   "Example:"
+   "Morning: Take 1 pill"
+   "Noon: Take 2 pills"
+   "Evening: Take 1 pill"
+   "Bedtime: Take 1 pill"
+   ""
+   "Respond only with the rewritten SIG. Do not write an introduction, summary, explanation, or notes."
+   ""
+   "---"
+   ""
+   "SIG (label direction):"
+   "%s"
+   ""
+   "---"
+   ""
+   "Respond only with the rewritten SIG. Do not write an introduction, summary, explanation, or notes."
+   )
+  )
+
+
 (def frequency-prompt (long-str
   "Task:"
   "Given the following label directions for a medication, extract the frequency of administration as an integer representing how many times per day the medication should be taken or applied. If the frequency is not explicitly stated as per day, convert the frequency to a per-day equivalent (e.g., \"twice a day\" becomes 2, \"every 12 hours\" becomes 2, \"every other day\" becomes 0.5). If the frequency cannot be determined or is not specified, return null."
